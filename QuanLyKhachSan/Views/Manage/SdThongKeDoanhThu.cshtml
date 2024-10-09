@@ -1,0 +1,114 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "SDThongKeDoanhThu";
+    Layout = "~/Views/Shared/_LayoutManage.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doanh Thu Theo Tháng</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        canvas {
+            max-width: 600px;
+            margin: 20px auto;
+            display: none; /* Ẩn tất cả các canvas ban đầu */
+        }
+
+
+        button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Sơ Đồ Thống Kê Doanh Thu </h1>
+
+     <!-- Tạo button cho mỗi năm -->
+    @foreach (var yearGroup in Model.GroupBy(x => x.Nam))
+    {
+    if (yearGroup.Any())
+    {
+    <button onclick="showChart('@yearGroup.Key')">Năm @yearGroup.Key</button>
+    }
+    }
+    @foreach (var yearGroup in Model.GroupBy(x => x.Nam))
+    {
+        if (yearGroup.Any())
+        {
+            <h4>Năm @yearGroup.Key</h4>
+            <canvas id="doanhThuChart_@yearGroup.Key"></canvas>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const ctx = document.getElementById('doanhThuChart_@yearGroup.Key').getContext('2d');
+
+                    // Chuẩn bị dữ liệu cho năm @yearGroup.Key
+                    const labels = [];
+                    const data = [];
+
+                @foreach (var item in yearGroup)
+                {
+                    <text>
+                            labels.push('Tháng @item.Thang');
+                        data.push(@item.TongDoanhThu);
+                    </text>
+                }
+
+                                                                    // Tạo biểu đồ
+                                                                    const doanhThuChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Tổng Doanh Thu',
+                                data: data,
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                });
+            </script>
+        }
+    }
+    <script>
+        // Hàm để hiển thị biểu đồ khi nút được nhấn
+        function showChart(year) {
+            // Ẩn tất cả các canvas
+            const canvases = document.querySelectorAll('canvas');
+            canvases.forEach((canvas) => {
+                canvas.style.display = 'none';
+            });
+
+            // Hiện canvas tương ứng với năm được nhấn
+            const chartCanvas = document.getElementById('doanhThuChart_' + year);
+            if (chartCanvas) {
+                chartCanvas.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
+<div>
+    <a asp-controller="Manage" asp-action="SDThongKeDoanhThu">Về trang chủ Sơ Đồ</a>
+</div>

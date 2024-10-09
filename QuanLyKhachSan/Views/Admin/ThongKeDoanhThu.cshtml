@@ -1,0 +1,48 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Thống Kê Doanh Thu Theo Tháng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml"; // Đường dẫn đến layout của bạn
+}
+
+<h1 class ="centered-bold-purple">Thống Kê Doanh Thu Theo Tháng</h1>
+
+@{
+    // Nhóm dữ liệu theo năm
+    var doanhThuTheoNam = Model.GroupBy(item => item.Nam);
+}
+
+@foreach (var namGroup in doanhThuTheoNam)
+{
+    var nam = namGroup.Key;
+    var doanhThuList = namGroup.ToList();
+
+    // Tạo bảng cho mỗi năm
+    <h2>Doanh Thu Năm @nam</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Tháng</th>
+                <th>Tổng Doanh Thu</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (doanhThuList.Any())
+            {
+                foreach (var item in doanhThuList)
+                {
+                    <tr>
+                        <td>@item.Thang</td>
+                        <td>@item.TongDoanhThu</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="2" class="text-center">Chưa có dữ liệu</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

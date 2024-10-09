@@ -1,0 +1,62 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model QuanLyKhachSan.Models.Nhanvien
+
+@{
+    ViewData["Title"] = "DetailsNV";
+    Layout = "~/Views/Shared/_LayoutManage.cshtml";
+}
+
+<h1 class="centered-bold-purple">Chi Tiết Nhân Viên</h1>
+
+<div style="background-color: rebeccapurple; color: white; padding: 20px; border-radius: 8px;">
+    <h2>Thông Tin Nhân Viên</h2>
+    <hr />
+    <dl class="row" style="font-size: 20px;">
+        <div class="col-sm-12">
+            <div class="row">
+                <dt class="col-sm-2">ID_NV</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.IdNv)</dd>
+            </div>
+            <div class="row">
+                <dt class="col-sm-2">Họ và Tên</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.HoTenNv)</dd>
+            </div>
+            <div class="row">
+                <dt class="col-sm-2">Ngày Sinh</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.NgaySinhNv)</dd>
+            </div>
+            <div class="row">
+                <dt class="col-sm-2">Số CCCD</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.Cccd)</dd>
+            </div>
+            <div class="row">
+                <dt class="col-sm-2">Số điện thoại</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.SdtNv)</dd>
+            </div>
+            <div class="row">
+                <dt class="col-sm-2">Địa chỉ</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.DiaChi)</dd>
+            </div>
+            <div class="row">
+                <dt class="col-sm-2">Chức vụ</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.ChucVu)</dd>
+            </div>
+            <div class="row">
+                <dt class="col-sm-2">Email</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.Email)</dd>
+            </div>
+            <div class="row">
+                <dt class="col-sm-2">Pass Email</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.Pass)</dd>
+            </div>
+        </div>
+    </dl>
+</div>
+<div>
+    <a asp-controller="Manage" asp-action="QLNhanVien">Về trang chủ Quản Lý Nhân Viên</a>
+</div>
+@* <div>
+    <a asp-action="Edit" asp-route-id="@Model?.IdNv">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+ *@

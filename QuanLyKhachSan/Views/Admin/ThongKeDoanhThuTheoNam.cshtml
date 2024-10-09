@@ -1,0 +1,84 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "ThongKeDoanhThuTheoNam";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1 class="centered-bold-purple">Thống Kê Doanh Thu Theo Năm</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Năm</th>
+            <th>Tổng Doanh Thu</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Nam</td>
+                    <td>@item.TongDoanhThu</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="2" class="text-center">Chưa có dữ liệu</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h1 class="centered-bold-purple">Sơ đồ Thống Kê Doanh Thu Theo Năm</h1>
+
+<canvas id="revenueChart" width="400" height="200"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Dữ liệu doanh thu theo năm
+    const labels = [];
+    const data = [];
+
+    @if (Model.Any())
+    {
+        foreach (var item in Model)
+        {
+            <text>labels.push('@item.Nam');</text>
+            <text>data.push(@item.TongDoanhThu);</text>
+        }
+    }
+
+    const chartData = {
+        labels: labels,
+        datasets: [{
+            label: 'Doanh Thu Theo Năm',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1,
+            data: data,
+        }]
+    };
+
+    const config = {
+        type: 'bar', // Kiểu biểu đồ
+        data: chartData,
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        },
+    };
+
+    const revenueChart = new Chart(
+        document.getElementById('revenueChart'),
+        config
+    );
+</script>

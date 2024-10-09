@@ -1,0 +1,45 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model QuanLyKhachSan.Models.Loaiphong
+
+@{
+    ViewData["Title"] = "ThemLoaiPhong";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1 class="centered-bold-purple">Thêm Loại Phòng</h1>
+
+<h3>Thông tin loại phòng cần thêm</h3>
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="ThemLoaiPhong">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IdLp" class="control-label"></label>
+                <input asp-for="IdLp" class="form-control" />
+                <span asp-validation-for="IdLp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TenLp" class="control-label"></label>
+                <input asp-for="TenLp" class="form-control" />
+                <span asp-validation-for="TenLp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GiaLp" class="control-label"></label>
+                <input asp-for="GiaLp" class="form-control" />
+                <span asp-validation-for="GiaLp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MoTaLp" class="control-label"></label>
+                <input asp-for="MoTaLp" class="form-control" />
+                <span asp-validation-for="MoTaLp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Thêm Loại Phòng" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Admin" asp-action="QLLP">Về trang chủ Quản Lý Loại Phòng</a>
+</div>

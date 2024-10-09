@@ -1,0 +1,72 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<QuanLyKhachSan.Models.Loaiphong>
+
+@{
+    ViewData["Title"] = "QLLoaiPhong";
+    Layout = "~/Views/Shared/_LayoutManage.cshtml";
+}
+
+<h1 class="centered-bold-purple">Danh Sách Loại Phòng</h1>
+
+<p style="margin-bottom: 100px;">
+    <a asp-action="ThemLoaiPhong">
+        <button class="button-purple ">Thêm Loại Phòng</button>
+    </a>
+</p>
+<form method="get" action="@Url.Action("QLLoaiPhong")" class="form-inline">
+    <div class="form-group">
+        Tìm kiếm theo tên LP: <input type="text" id="tenLP" name="tenLP"
+                                     value="@ViewBag.TenLp"
+                                     placeholder="Nhập tên loại phòng" />
+
+
+        <button type="submit" class="btn-purple">Tìm kiếm</button>
+    </div>
+
+</form>
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th>
+                Tên Loại Phòng
+            </th>
+            <th>
+                Gía Loại Phòng
+            </th>
+            <th>
+                Mô tả chi tiết 
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenLp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GiaLp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MoTaLp)
+            </td>
+            <td>
+                    <a asp-action="SuaLoaiPhong" asp-route-IdLp="@item.IdLp">
+                        <button type="submit" class="btn-success">Edit</button>
+                    </a>
+                    <a asp-action="DetailsLP" asp-route-IdLp="@item.IdLp">
+                        <button type="submit" class="btn-success">Details</button>
+                    </a> |
+                    <a asp-action="XoaLoaiPhong" asp-route-IdLp="@item.IdLp">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<div>
+    <a asp-controller="Manage" asp-action="QLLoaiPhong">Về trang chủ Quản Lý Loại Phòng</a>
+</div>

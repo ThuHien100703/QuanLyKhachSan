@@ -1,0 +1,127 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<QuanLyKhachSan.Models.Phieuthuephong>
+
+@{
+    ViewData["Title"] = "PhieuThuePhong";
+    Layout = "~/Views/Shared/_LayoutManage.cshtml";
+}
+
+<h1 class="centered-bold-purple">Danh Sách Phiếu Thuê Phòng</h1>
+
+<p style="margin-bottom: 100px;">
+    <a asp-action="ThemPhieuThuePhong">
+        <button class="button-purple ">Tạo phiếu thuê phòng</button>
+    </a>
+</p>
+<form method="get" action="@Url.Action("PhieuThuePhong")" class="form-inline">
+
+    <div class="form-group">
+        Tìm kiếm theo ID_P:
+        <input type="text" id="idP" name="idP"
+               value="@ViewBag.IdP"
+               placeholder="Nhập ID phòng" />
+        ID_NV:
+        <input type="text" id="idNv" name="idNv"
+               value="@ViewBag.IdNv"
+               placeholder="Nhập ID nhân viên" />
+        ID_KH:
+        <input type="text" id="idKh" name="idKh"
+               value="@ViewBag.IdKh"
+               placeholder="Nhập ID khách hàng" />
+        <button type="submit" class="btn-purple">Tìm kiếm</button>
+    </div>
+    <div></div>
+</form>
+
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th>
+                ID_PTP
+            </th>
+            <th>
+                ID_KH
+            </th>
+            <th>
+                ID_NV
+            </th>
+            <th>
+                ID_P
+            </th>
+            <th>
+                NgayThuePhong
+            </th>
+            <th>
+                NgayTraPhong
+            </th>
+            <th>
+                TongTienPhong
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdPtp)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdKh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdNv)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdP)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NgayThuePhong)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NgayTraPhong)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TongTienPhong)
+                </td>
+                <td>
+                    <a asp-action="SuaPTP" asp-route-IdPtp="@item.IdPtp">
+                        <button type="submit" class="btn-success">Edit</button>
+                    </a>
+                  
+                    <a asp-action="XoaPTP" asp-route-IdPtp="@item.IdPtp">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<nav>
+    <ul class="pagination">
+        @if (ViewBag.CurrentPage > 1)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="PhieuThuePhong" asp-route-idP="@ViewBag.IdP" asp-route-idNv="@ViewBag.IdNv" asp-route-idKh="@ViewBag.IdKh" asp-route-page="@(ViewBag.CurrentPage - 1)">Trang trước</a>
+            </li>
+        }
+
+        @for (var i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                <a class="page-link" asp-action="PhieuThuePhong" asp-route-idP="@ViewBag.IdP" asp-route-idNv="@ViewBag.IdNv" asp-route-idKh="@ViewBag.IdKh" asp-route-page="@i">@i</a>
+            </li>
+        }
+
+        @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="PhieuThuePhong" asp-route-idP="@ViewBag.IdP" asp-route-idNv="@ViewBag.IdNv" asp-route-idKh="@ViewBag.IdKh" asp-route-page="@(ViewBag.CurrentPage + 1)">Trang sau</a>
+            </li>
+        }
+    </ul>
+</nav>
+<div>
+    <a asp-controller="Manage" asp-action="PhieuThuePhong">Về trang chủ Phiếu Thuê Phòng</a>
+</div>

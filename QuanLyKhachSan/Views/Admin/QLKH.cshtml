@@ -1,0 +1,118 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<QuanLyKhachSan.Models.Khachhang>
+
+@{
+    ViewData["Title"] = "QLKH";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1 class="centered-bold-purple">Danh Sách Khách Hàng</h1>
+<p style="margin-bottom: 100px;">
+    <a asp-action="ThemKhachHang">
+        <button class="button-purple ">Thêm Khách Hàng</button>
+    </a>
+</p>
+<form method="get" action="@Url.Action("QLKH")" class="form-inline">
+    <div class="form-group">
+        Tìm kiếm theo họ tên: <input type="text" id="hoTen" name="hoTen"
+               value="@ViewBag.HoTen"
+               placeholder="Nhập họ tên khách hàng"/>
+        
+        Tìm kiếm theo số CCCD:<input type="number" id="soCCCD" name="soCCCD"
+               value="@ViewBag.SoCccd"
+               placeholder="Nhập số CCCD khách hàng" />
+        <button type="submit" class="btn-purple">Tìm kiếm</button>
+    </div>
+    
+</form>
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th>
+               ID_KH
+            </th>
+            <th>
+                Họ và tên
+            </th>
+            <th>
+               Ngày sinh
+            </th>
+            <th>
+                Số CCCD
+            </th>
+            <th>
+                SĐT
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Địa chỉ
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdKh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HoTenKh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgaySinhKh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoCccd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SdtKh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailKh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiaChiKh)
+            </td>
+            <td>
+                    <a asp-action="SuaKhachHang" asp-route-IdKh="@item.IdKh">
+                        <button type="button" class="btn-success">Edit</button>
+                    </a>
+                    
+                    <a asp-action="XoaKhachHang" asp-route-IdKh="@item.IdKh">
+                        <button type="button" class="btn btn-danger">Delete</button>
+                    </a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<nav>
+    <ul class="pagination">
+        @if (ViewBag.CurrentPage > 1)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="QLKH" asp-route-hoTen="@ViewBag.HoTen" asp-route-soCCCD="@ViewBag.SoCccd" asp-route-page="@(ViewBag.CurrentPage - 1)">Trang trước</a>
+            </li>
+        }
+
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                <a class="page-link" asp-action="QLKH" asp-route-hoTen="@ViewBag.HoTen" asp-route-soCCCD="@ViewBag.SoCccd" asp-route-page="@i">@i</a>
+            </li>
+        }
+
+        @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="QLKH" asp-route-hoTen="@ViewBag.HoTen" asp-route-soCCCD="@ViewBag.SoCccd" asp-route-page="@(ViewBag.CurrentPage + 1)">Trang sau</a>
+            </li>
+        }
+    </ul>
+</nav>
+<div>
+    <a asp-controller="Admin" asp-action="QLKH">Về trang chủ Quản Lý Khách Hàng</a>
+</div>

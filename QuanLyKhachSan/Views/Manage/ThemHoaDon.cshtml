@@ -1,0 +1,80 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model QuanLyKhachSan.Models.Hoadon
+
+@{
+    ViewData["Title"] = "ThemHoaDon";
+    Layout = "~/Views/Shared/_LayoutManage.cshtml";
+}
+
+<h1>Thêm Hóa Đơn</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="ThemHoaDon">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IdHd" class="control-label"></label>
+                <input asp-for="IdHd" class="form-control" />
+                <span asp-validation-for="IdHd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdPtp" class="control-label"></label>
+                <select asp-for="IdPtp" class="form-control" asp-items="ViewBag.IdPtp" id="phieuSelect"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ThanhTien" class="control-label"></label>
+                <input asp-for="ThanhTien" class="form-control" id="thanhTien" />
+                <span asp-validation-for="ThanhTien" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayThanhToan" class="control-label"></label>
+                <input asp-for="NgayThanhToan" class="form-control" id="ngayThanhToan" />
+                <span asp-validation-for="NgayThanhToan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GhiChu" class="control-label"></label>
+                <input asp-for="GhiChu" class="form-control" />
+                <span asp-validation-for="GhiChu" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#phieuSelect').change(function () {
+                var idPtp = $(this).val(); // Get the selected IdPtp
+                if (idPtp) { // Check if idPtp is valid
+                    $.get('@Url.Action("GetTongTienPhong")', { idPtp: idPtp }, function (data) {
+                        $('#thanhTien').val(data); // Update the ThanhTien field with the room price
+                    }).fail(function () {
+                        console.error('Error fetching room price.');
+                    });
+                } else {
+                    $('#thanhTien').val(''); // Clear the value if no room is selected
+                }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#phieuSelect').change(function () {
+                var idPtp = $(this).val(); // Get the selected IdPtp
+                if (idPtp) { // Check if idPtp is valid
+                    $.get('@Url.Action("GetNgayTraPhong")', { idPtp: idPtp }, function (data) {
+                        $('#ngayThanhToan').val(data); // Update the ThanhTien field with the room price
+                    }).fail(function () {
+                        console.error('Error fetching room price.');
+                    });
+                } else {
+                    $('#ngayThanhToan').val(''); // Clear the value if no room is selected
+                }
+            });
+        });
+    </script>
+}
+

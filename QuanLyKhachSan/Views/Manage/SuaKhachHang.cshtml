@@ -1,0 +1,57 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model QuanLyKhachSan.Models.Khachhang
+
+@{
+    ViewData["Title"] = "SuaKhachHang";
+    Layout = "~/Views/Shared/_LayoutManage.cshtml";
+}
+
+<h1 class="centered-bold-purple">Sửa Thông Tin Khách Hàng</h1>
+
+<h4>Thông tin khách hàng cần sửa</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SuaKhachHang">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdKh" />
+            <div class="form-group">
+                <label asp-for="HoTenKh" class="control-label"></label>
+                <input asp-for="HoTenKh" class="form-control" />
+                <span asp-validation-for="HoTenKh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgaySinhKh" class="control-label"></label>
+                <input asp-for="NgaySinhKh" class="form-control" type="date" />
+                <span asp-validation-for="NgaySinhKh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoCccd" class="control-label"></label>
+                <input asp-for="SoCccd" class="form-control" />
+                <span asp-validation-for="SoCccd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SdtKh" class="control-label"></label>
+                <input asp-for="SdtKh" class="form-control" />
+                <span asp-validation-for="SdtKh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmailKh" class="control-label"></label>
+                <input asp-for="EmailKh" class="form-control" />
+                <span asp-validation-for="EmailKh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DiaChiKh" class="control-label"></label>
+                <input asp-for="DiaChiKh" class="form-control" />
+                <span asp-validation-for="DiaChiKh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Cập nhật" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Manage" asp-action="QLKhachHang">Về trang chủ Quản Lý Khách Hàng</a>
+</div>

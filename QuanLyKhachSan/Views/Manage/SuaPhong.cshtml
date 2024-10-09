@@ -1,0 +1,53 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model QuanLyKhachSan.Models.Phong
+
+@{
+    ViewData["Title"] = "SuaPhong";
+    Layout = "~/Views/Shared/_LayoutManage.cshtml";
+}
+
+<h1 class="centered-bold-purple">Sửa Thông Tin Phòng</h1>
+
+<h4>Thông tin phòng cần sửa</h4>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SuaPhong">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdP" />
+            <div class="form-group">
+                <label asp-for="IdLp" class="control-label"></label>
+                <select asp-for="IdLp" class="form-control" asp-items="ViewBag.IdLp"></select>
+                <span asp-validation-for="IdLp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TenPhong" class="control-label"></label>
+                <input asp-for="TenPhong" class="form-control" />
+                <span asp-validation-for="TenPhong" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GiaP" class="control-label"></label>
+                <input asp-for="GiaP" class="form-control" />
+                <span asp-validation-for="GiaP" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ChiTietP" class="control-label"></label>
+                <input asp-for="ChiTietP" class="form-control" />
+                <span asp-validation-for="ChiTietP" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-check-label">
+                    @Html.DisplayNameFor(model => model.TinhTrang)
+                </label>
+                <input class="form-check-input" type="checkbox" asp-for="TinhTrang" />
+                <span asp-validation-for="TinhTrang" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Cập nhật" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Manage" asp-action="QLPhong">Về trang chủ Quản Lý Phòng</a>
+</div>

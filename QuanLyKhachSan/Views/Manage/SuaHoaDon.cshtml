@@ -1,0 +1,74 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model QuanLyKhachSan.Models.Hoadon
+
+@{
+    ViewData["Title"] = "SuaHoaDon";
+    Layout = "~/Views/Shared/_LayoutManage.cshtml";
+}
+
+<h1 class ="centered-bold-purple">
+    Sửa Hóa Đơn
+</h1>
+
+<h4>Hóa đơn cần sửa</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SuaHoaDon">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdHd" />
+            <div class="form-group">
+                <label asp-for="IdPtp" class="control-label"></label>
+                <select asp-for="IdPtp" class="form-control" asp-items="ViewBag.IdPtp" id="phieuSelect"></select>
+                <span asp-validation-for="IdPtp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ThanhTien" class="control-label"></label>
+                <input asp-for="ThanhTien" class="form-control" id="thanhTien" />
+                <span asp-validation-for="ThanhTien" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayThanhToan" class="control-label"></label>
+                <input asp-for="NgayThanhToan" class="form-control" id="ngayThanhToan" type="date" />
+                <span asp-validation-for="NgayThanhToan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GhiChu" class="control-label"></label>
+                <input asp-for="GhiChu" class="form-control" />
+                <span asp-validation-for="GhiChu" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Cập nhật" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#phieuSelect').change(function () {
+                var idPtp = $(this).val(); // Lấy IdPtp đã chọn
+                if (idPtp) { // Kiểm tra xem IdPtp có hợp lệ không
+                    // Cập nhật giá phòng
+                    $.get('@Url.Action("GetTongTienPhong")', { idPtp: idPtp }, function (data) {
+                        $('#thanhTien').val(data); // Cập nhật trường ThanhTien với giá phòng
+                    }).fail(function () {
+                        console.error('Error fetching room price.');
+                    });
+
+                    // Cập nhật ngày thanh toán
+                    $.get('@Url.Action("GetNgayTraPhong")', { idPtp: idPtp }, function (data) {
+                        $('#ngayThanhToan').val(data); // Cập nhật trường NgayThanhToan với ngày
+                    }).fail(function () {
+                        console.error('Error fetching payment date.');
+                    });
+                } else {
+                    $('#thanhTien').val(''); // Xóa giá nếu không có phòng được chọn
+                    $('#ngayThanhToan').val(''); // Xóa ngày nếu không có phòng được chọn
+                }
+            });
+        });
+    </script>
+}

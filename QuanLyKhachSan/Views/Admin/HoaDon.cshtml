@@ -1,0 +1,93 @@
+﻿@model IEnumerable<QuanLyKhachSan.Models.Hoadon>
+
+@{
+    ViewData["Title"] = "HoaDon";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1 class="centered-bold-purple">Danh Sách Hóa Đơn</h1>
+
+<p style="margin-bottom: 90px;">
+    <a asp-action="ThemHoaDon">
+        <button class="button-purple ">Thêm Hóa Đơn</button>
+    </a>
+</p>
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th>
+                ID_HD
+            </th>
+            <th>
+                ID_PTP
+            </th>
+            <th>
+                Thành Tiền
+            </th>
+            <th>
+                Ngày Thanh Toán
+            </th>
+            <th>
+                Ghi Chú
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdHd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPtp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ThanhTien)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayThanhToan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GhiChu)
+            </td>
+            <td>
+                    <a asp-action="SuaHD" asp-route-IdHd="@item.IdHd">
+                    <button type="submit" class="btn-success">Edit</button>
+                </a>
+                
+                <a asp-action="XoaHoaDon" asp-route-IdHd="@item.IdHd">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<nav>
+    <ul class="pagination">
+        @if (ViewBag.CurrentPage > 1)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="HoaDon" asp-route-page="@(ViewBag.CurrentPage - 1)">Trang trước</a>
+            </li>
+        }
+
+        @for (var i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                <a class="page-link" asp-action="HoaDon" asp-route-page="@i">@i</a>
+            </li>
+        }
+
+        @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="HoaDon" asp-route-page="@(ViewBag.CurrentPage + 1)">Trang sau</a>
+            </li>
+        }
+    </ul>
+</nav>
+<div>
+    <a asp-controller="Admin" asp-action="HoaDon">Về trang chủ Hóa Đơn</a>
+</div>

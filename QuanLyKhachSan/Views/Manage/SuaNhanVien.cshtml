@@ -1,0 +1,67 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model QuanLyKhachSan.Models.Nhanvien
+
+@{
+    ViewData["Title"] = "SuaNhanVien";
+    Layout = "~/Views/Shared/_LayoutManage.cshtml";
+}
+
+<h1 class="centered-bold-purple">Sửa Thông Tin Nhân Viên</h1>
+
+<h4>Thông tin nhân viên cần sửa</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SuaNhanVien">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdNv" />
+            <div class="form-group">
+                <label >Ho Ten KH</label>
+                <input asp-for="HoTenNv" class="form-control" />
+                <span asp-validation-for="HoTenNv" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgaySinhNv" class="control-label"></label>
+                <input asp-for="NgaySinhNv" class="form-control" type="date" />
+                <span asp-validation-for="NgaySinhNv" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cccd" class="control-label"></label>
+                <input asp-for="Cccd" class="form-control" />
+                <span asp-validation-for="Cccd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SdtNv" class="control-label"></label>
+                <input asp-for="SdtNv" class="form-control" />
+                <span asp-validation-for="SdtNv" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DiaChi" class="control-label"></label>
+                <input asp-for="DiaChi" class="form-control" />
+                <span asp-validation-for="DiaChi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ChucVu" class="control-label"></label>
+                <input asp-for="ChucVu" class="form-control" />
+                <span asp-validation-for="ChucVu" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pass" class="control-label"></label>
+                <input asp-for="Pass" class="form-control" />
+                <span asp-validation-for="Pass" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Cập nhật" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Manage" asp-action="QLNhanVien">Về trang chủ Quản Lý Nhân Viên</a>
+</div>

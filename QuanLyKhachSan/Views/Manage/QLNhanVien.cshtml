@@ -1,0 +1,123 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<QuanLyKhachSan.Models.Nhanvien>
+
+@{
+    ViewData["Title"] = "QLNhanVien";
+    Layout = "~/Views/Shared/_LayoutManage.cshtml";
+}
+
+<h1 class="centered-bold-purple">Danh Sách Nhân Viên</h1>
+
+<p style="margin-bottom: 100px;">
+    <a asp-action="ThemNhanVien">
+        <button class="button-purple ">Thêm nhân viên</button>
+        </a>
+</p>
+<form asp-action="QLNhanVien" method="get" class="form-inline">
+    <div class="form-group">
+        <div>Tìm kiếm:</div>
+        <input type="text" name="searchTerm" value="@ViewBag.SearchTerm" @* class="form-control" *@ />
+        <button type="submit" class="btn-primary">Tìm</button>
+    </div>
+</form>
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th>
+                Họ và tên
+            </th>
+            <th>
+                Ngày sinh
+            </th>
+            <th>
+               Số CCCD
+            </th>
+            <th>
+                Số điện thoại
+            </th>
+            <th>
+               Địa chỉ
+            </th>
+            <th>
+                Chức vụ
+            </th>
+            <th>
+                Email
+            </th>
+            @* <th>
+                Pass
+            </th> *@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.HoTenNv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgaySinhNv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cccd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SdtNv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiaChi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChucVu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+           @*  <td>
+                @Html.DisplayFor(modelItem => item.Pass)
+            </td> *@
+            <td>
+                    <a asp-action="SuaNhanVien" asp-route-IdNv="@item.IdNv">
+                        <button type="submit" class="btn-success">Edit</button>
+                    </a>
+                    <a asp-action="DetailsNV" asp-route-IdNv="@item.IdNv">
+                        <button type="submit" class="btn-success">Details</button>
+                    </a>
+                    <a asp-action="XoaNhanVien" asp-route-IdNv="@item.IdNv">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
+<nav>
+    <ul class="pagination">
+        @if (ViewBag.CurrentPage > 1)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="QLNhanVien" asp-route-page="@(ViewBag.CurrentPage - 1)">Trang trước</a>
+            </li>
+        }
+
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                <a class="page-link" asp-action="QLNhanVien" asp-route-page="@i">@i</a>
+            </li>
+        }
+
+        @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="QLNhanVien" asp-route-page="@(ViewBag.CurrentPage + 1)">Trang sau</a>
+            </li>
+        }
+    </ul>
+</nav>
+<div>
+    <a asp-controller="Manage" asp-action="QLNhanVien">Về trang chủ Quản Lý Nhân Viên</a>
+</div>

@@ -1,0 +1,97 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model QuanLyKhachSan.Models.Phieuthuephong
+
+@{
+    ViewData["Title"] = "ThemPhieuThuePhong";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1 class="centered-bold-purple">Thêm Phiếu Thuê Phòng</h1>
+
+<h4>Thông tin phiếu thuê phòng</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="ThemPhieuThuePhong">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IdPtp" class="control-label"></label>
+                <input asp-for="IdPtp" class="form-control" />
+                <span asp-validation-for="IdPtp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdKh" class="control-label"></label>
+                <select asp-for="IdKh" class="form-control" asp-items="ViewBag.IdKh"></select>
+                <span asp-validation-for="IdKh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdP" class="control-label"></label>
+                <select asp-for="IdP" class="form-control" asp-items="ViewBag.IdP" id="phongSelect"></select>
+                <span asp-validation-for="IdP" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdNv" class="control-label"></label>
+                <select asp-for="IdNv" class="form-control" asp-items="ViewBag.IdNv"></select>
+                <span asp-validation-for="IdNv" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayThuePhong" class="control-label"></label>
+                <input asp-for="NgayThuePhong" class="form-control" type="date" />
+                <span asp-validation-for="NgayThuePhong" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayTraPhong" class="control-label"></label>
+                <input asp-for="NgayTraPhong" class="form-control" type="date" />
+                <span asp-validation-for="NgayTraPhong" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TongTienPhong" class="control-label"></label>
+                <input asp-for="TongTienPhong" class="form-control" id="tongTienPhong" readonly />
+                <span asp-validation-for="TongTienPhong" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#phongSelect').change(function () {
+                var idP = $(this).val();
+                if (idP) {
+                    $.get('@Url.Action("GetGiaPhong")', { idP: idP }, function (data) {
+                        $('#giaPhong').val(data); // Cập nhật giá phòng vào ô
+                        calculateTotal();
+                    });
+                } else {
+                    $('#tongTienPhong').val(''); // Xóa giá nếu không có phòng nào được chọn
+                }
+            });
+
+            $('#NgayThuePhong, #NgayTraPhong').change(function () {
+                calculateTotal();
+            });
+
+            function calculateTotal() {
+                var giaPhong = parseFloat($('#giaPhong').val()) || 0;
+                var ngayThue = new Date($('#NgayThuePhong').val());
+                var ngayTra = new Date($('#NgayTraPhong').val());
+
+                if (ngayThue && ngayTra && ngayTra >= ngayThue) {
+                    var numberOfDays = Math.ceil((ngayTra - ngayThue) / (1000 * 60 * 60 * 24)); // Tính số ngày
+                    var tongTienPhong = numberOfDays * giaPhong; // Tính tổng tiền phòng
+                    $('#tongTienPhong').val(tongTienPhong.toFixed(2)); // Cập nhật tổng tiền
+                } else {
+                    $('#tongTienPhong').val(''); // Xóa tổng tiền nếu không hợp lệ
+                }
+            }
+        });
+    </script>
+}
+<div>
+    <a asp-controller="Admin" asp-action="PhieuThuePhong">Về trang chủ</a>
+</div>
